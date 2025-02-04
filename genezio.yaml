@@ -1,0 +1,29 @@
+backend:
+    functions:
+        - entry: src/index.js
+          handler: handler
+          name: express
+          path: .
+          type: httpServer
+    language:
+        name: js
+    path: backend
+    scripts:
+        deploy:
+            - npm install
+        local:
+            - npm install
+frontend:
+    environment:
+        VITE_API_URL_EXPRESS: ${{ backend.functions.express.url }}
+    path: frontend
+    publish: dist
+    scripts:
+        build:
+            - npm run build
+        deploy:
+            - npm install
+    subdomain: real-time-chat
+name: real-time-chat
+region: us-east-1
+yamlVersion: 2
